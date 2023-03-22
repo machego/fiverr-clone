@@ -8,6 +8,7 @@ import messageRoute from './routes/message.route.js';
 import gigRoute from './routes/gig.route.js';
 import conversationRoute from './routes/conversation.route.js';
 import authRoute from './routes/auth.route.js';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
@@ -24,6 +25,10 @@ const connect = async () => {
         console.log(error)
     }
 };
+
+//midleware
+app.use(express.json());
+app.use(cookieParser());
 
 // using endpoints
 app.use('/api/auth', authRoute);
