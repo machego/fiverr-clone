@@ -1,4 +1,4 @@
-import React from 'react';
+import './app.scss'
 import Navbar from './components/navbar/Navbar';
 import Home from './pages/home/Home'
 import Gigs from './pages/gigs/Gigs'
@@ -14,16 +14,27 @@ import {
   Outlet
 } from "react-router-dom";
 import Footer from './components/footer/Footer';
-
+import Register from './pages/register/Register';
+import Login from './pages/login/Login';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+import Pay from "./pages/pay/Pay"
+import Success from './pages/success/Success';
 
 function App() {
+  const queryClient = new QueryClient()
 
   const Layout = () => {
     return (
       <div className='app'>
-      <Navbar />
-      <Outlet />
-      <Footer />
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </QueryClientProvider>
       </div>
     )
   }
@@ -34,48 +45,58 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: '/',
-          element: <Home />
+          path: "/",
+          element: <Home />,
         },
         {
-          path: '/gigs',
-          element: <Gigs />
+          path: "/gigs",
+          element: <Gigs />,
         },
         {
-          path: '/gig/:id',
-          element: <Gig />
+          path: "/myGigs",
+          element: <MyGigs />,
         },
         {
-          path: '/orders',
-          element: <Orders />
+          path: "/orders",
+          element: <Orders />,
         },
         {
-          path: '/myGigs',
-          element: <MyGigs />
+          path: "/messages",
+          element: <Messages />,
         },
         {
-          path: '/add',
-          element: <Add />
+          path: "/message/:id",
+          element: <Message />,
         },
         {
-          path: '/messages',
-          element: <Messages />
+          path: "/add",
+          element: <Add />,
         },
         {
-          path: '/message/:id',
-          element: <Message />
-        }
-      ]
+          path: "/gig/:id",
+          element: <Gig />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/pay/:id",
+          element: <Pay />,
+        },
+        {
+          path: "/success",
+          element: <Success />,
+        },
+      ],
     },
   ]);
-  
 
-  return (
-    <div className="App">
-      <RouterProvider router={router} />
-      
-    </div>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
